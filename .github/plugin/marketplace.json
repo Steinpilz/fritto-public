@@ -4,7 +4,9 @@
     "name": "Steinpilz",
     "email": "TODO-CONTACT-EMAIL"
   },
-  "description": "Fritto (TimeTracker) AI plugins for time tracking, approvals, user management, and reporting.",
+  "metadata": {
+    "description": "Fritto (TimeTracker) AI plugins for time tracking, approvals, user management, and reporting."
+  },
   "plugins": [
     {
       "name": "fritto-timetracker",

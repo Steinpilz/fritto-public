@@ -1,0 +1,15 @@
+{
+  "name": "fritto",
+  "owner": {
+    "name": "Steinpilz",
+    "email": "TODO-CONTACT-EMAIL"
+  },
+  "description": "Fritto (TimeTracker) AI plugins for time tracking, approvals, user management, and reporting.",
+  "plugins": [
+    {
+      "name": "fritto-timetracker",
+      "source": "./plugins/fritto-timetracker",
+      "description": "TimeTracker MCP tools for time tracking, approvals, user management, and reporting"
+    }
+  ]
+}

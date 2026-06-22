@@ -24,7 +24,7 @@ description: Guide for using TimeTracker MCP tools. Covers time submission, appr
 | `list_projects` | Get assigned projects with IDs and client names |
 | `validate_day` | Check if a date is editable (not locked/approved) |
 | `log_time` | Create a time entry |
-| `get_time_records` | View entries for a date range (returns IDs, stamps) |
+| `get_time_records` | View entries for a date range (returns record IDs + approval status) |
 | `update_time_record` | Modify an existing entry |
 | `delete_time_record` | Remove an entry (irreversible) |
 | `submit_for_approval` | Submit draft entries for review |
@@ -41,7 +41,7 @@ Always get project IDs first:
 ### View & Edit Entries
 
 1. `get_time_records` with `from` and `to` dates
-   - Returns per-day records with `timeRecordId`, `concurrencyStamp`, approval status
+   - Returns per-day records with `timeRecordId` (the record `id`) and approval status
 2. To update: `update_time_record` with `timeRecordId`, `projectId`, `hours`, `date`
    - Concurrency stamp auto-fetched if omitted
    - To move to different date: set `date` to new date, `originalDate` to current date
@@ -86,7 +86,7 @@ Always get project IDs first:
 |------|---------|
 | `search_pending_approvals` | Find entries by approval status |
 | `approve_time_entries` | Bulk approve submitted entries |
-| `decline_time_entries` | Bulk decline/reject entries |
+| `decline_time_entries` | Revoke approval on already-approved entries |
 | `get_all_time_reports` | Aggregated reports for all users |
 | `export_time_reports_csv` | Export as CSV |
 | `export_time_reports_xlsx` | Export as Excel |
@@ -103,7 +103,9 @@ Plus all Time Submitter tools with `userId` parameter for on-behalf operations.
 2. Review the returned data (hours per user/day)
 3. `approve_time_entries` with `from`, `to` to approve
    - Optional: `userIds`, `employeeGroupIds` to approve specific users/groups
-4. OR `decline_time_entries` with same params to reject (moves back to Draft)
+   - Acts on Submitted entries (`approvalStatus: 1`)
+
+To **reverse** an approval, use `decline_time_entries` with `from`, `to` (and optional `userIds`/`employeeGroupIds`). It acts on already-**Approved** entries (`approvalStatus: 2`), sending them back for revision. It does NOT reject Submitted entries — to send a Submitted day back, approve then decline, or have the employee re-edit before approval.
 
 ### On-Behalf Operations
 
@@ -122,7 +124,10 @@ Requires `TrackOnBehalf` permission.
 - `get_all_time_reports` with `from`, `to` — aggregated metrics for all users
   - Filters: `userIds`, `employeeGroupIds`, `clientIds`, `projectIds`, `approvalStatuses`, `taskUrls`
   - `groupBy`: 0=Employee, 1=Project, 2=EmployeeGroup, 3=Task
-- Export tools share same filters; output as CSV/XLSX (base64-encoded) or JSON
+- Export tools output base64-encoded files. Filter support differs per format:
+  - `export_time_reports_csv` — supports the same filters as `get_all_time_reports` (`userIds`, `employeeGroupIds`, `clientIds`, `projectIds`, `approvalStatuses`, `taskUrls`)
+  - `export_time_reports_xlsx` — `from`/`to` only (no filters)
+  - `export_time_reports_json` — `from`/`to` plus `prettyPrint` (boolean, default true); no filters
   - Size limit: 75 KB (~25K tokens). Narrow date range if exceeded.
 
 ### Workflow: Weekly Approval
@@ -139,8 +144,8 @@ Requires `TrackOnBehalf` permission.
 
 | Error | Meaning | Resolution |
 |-------|---------|------------|
-| `NotAllDaysWithApprovalStatus` | Entry not in expected status | Re-search to get current status |
-| `TimesheetsChanged` | Data modified since your search | Re-run `search_pending_approvals` |
+| `NotAllTimesheetsReadyForApproval` | Entry not in expected status | Re-search to get current status |
+| `TimesheetsHaveChanged` | Data modified since your search | Re-run `search_pending_approvals` |
 | `UserDayInLockedPeriod` | Date in locked period | Cannot approve/decline locked dates |
 
 ---
@@ -281,7 +286,7 @@ Requires `TrackOnBehalf` permission.
 | `submit_for_approval` | Approval | No | Yes | Submit drafts for review |
 | `search_pending_approvals` | Approval | Yes | No | Find entries by status |
 | `approve_time_entries` | Approval | No | No | Bulk approve |
-| `decline_time_entries` | Approval | No | No | Bulk decline |
+| `decline_time_entries` | Approval | No | No | Revoke approval on approved entries |
 | `get_own_time_reports` | Reports | Yes | No | Own aggregated reports |
 | `get_all_time_reports` | Reports | Yes | No | All users' reports |
 | `get_tracked_time` | Reports | Yes | No | Hours for a task URL |

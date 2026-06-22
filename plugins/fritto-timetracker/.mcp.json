@@ -2,8 +2,7 @@
   "mcpServers": {
     "fritto-timetracker": {
       "type": "http",
-      "url": "${TIMETRACKER_MCP_URL:-https://mcp.steinpilz-fritto.de/mcp}",
-      "authorizationUrl": "${TIMETRACKER_MCP_URL:-https://mcp.steinpilz-fritto.de}/oauth/authorize"
+      "url": "${TIMETRACKER_MCP_URL:-https://mcp.steinpilz-fritto.de/mcp}"
     }
   }
 }

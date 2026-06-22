@@ -24,7 +24,7 @@ Tools for tracking your own time: logging hours, editing entries, submitting for
 | `delete_time_record` | Remove an entry (irreversible) |
 | `submit_for_approval` | Submit draft entries for review |
 | `get_own_time_reports` | Your aggregated hours, utilization, billable metrics |
-| `get_tracked_time` | Total hours logged against a task URL |
+| `get_tracked_time` | Total hours logged for a task URL, across all users and projects |
 
 ## Log Time
 
@@ -51,7 +51,7 @@ Always get project IDs first:
 - `get_own_time_reports` with `from`, `to` — aggregated metrics
   - Optional: `groupBy` (0=Employee, 1=Project, 2=EmployeeGroup, 3=Task)
   - Optional filters: `clientIds`, `projectIds`, `approvalStatuses`, `taskUrls`
-- `get_tracked_time` with `taskUrl` — total hours across all users for a task
+- `get_tracked_time` with `taskUrl` — total hours for a task across all users and projects
 
 ## Workflow: Log a Full Week
 

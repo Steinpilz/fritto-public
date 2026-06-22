@@ -37,7 +37,7 @@ Tools for reviewing and approving team time, acting on behalf of employees, and 
 | `delete_time_record` | Remove an entry (irreversible) |
 | `submit_for_approval` | Submit draft entries for review |
 | `get_own_time_reports` | Your aggregated hours, utilization, billable metrics |
-| `get_tracked_time` | Total hours logged against a task URL |
+| `get_tracked_time` | Total hours logged for a task URL, across all users and projects |
 
 ## Approval Workflow
 

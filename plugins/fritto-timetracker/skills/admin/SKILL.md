@@ -26,7 +26,7 @@ All 29 Fritto MCP tools: time tracking, approvals, reporting, user management, c
 | `update_time_record` | Modify an existing entry |
 | `delete_time_record` | Remove an entry (irreversible) |
 | `submit_for_approval` | Submit draft entries for review |
-| `get_tracked_time` | Total hours logged against a task URL |
+| `get_tracked_time` | Total hours logged for a task URL, across all users and projects |
 
 - `log_time`: `projectId`, `hours` (decimal, max 24), `date`; optional `taskUrl`, `description` (max 1024)
 - `update_time_record`: `timeRecordId`, `projectId`, `hours`, `date`; concurrency stamp auto-fetched; set `originalDate` to move an entry to a new `date`

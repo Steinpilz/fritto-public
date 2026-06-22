@@ -10,7 +10,7 @@ All 29 Fritto MCP tools: time tracking, approvals, reporting, user management, c
 **Conventions:**
 - Dates: always `YYYY-MM-DD`
 - IDs: UUIDs (`projectId`, `userId`, `timeRecordId`)
-- On-behalf: time-tracking tools accept an optional `userId` to act for an employee
+- On-behalf: 7 time-tracking tools accept an optional `userId` to act for an employee — see the On-Behalf column in the Tool Quick Reference
 - Business rules enforced server-side: lock dates, approval status, project assignments
 
 ---
@@ -30,7 +30,7 @@ All 29 Fritto MCP tools: time tracking, approvals, reporting, user management, c
 
 - `log_time`: `projectId`, `hours` (decimal, max 24), `date`; optional `taskUrl`, `description` (max 1024)
 - `update_time_record`: `timeRecordId`, `projectId`, `hours`, `date`; concurrency stamp auto-fetched; set `originalDate` to move an entry to a new `date`
-- All accept optional `userId` for on-behalf operations
+- All except `get_tracked_time` accept optional `userId` for on-behalf operations (`get_tracked_time` takes only `taskUrl`)
 
 ---
 

@@ -10,7 +10,7 @@ Tools for reviewing and approving team time, acting on behalf of employees, and 
 **Conventions:**
 - Dates: always `YYYY-MM-DD`
 - IDs: UUIDs (`projectId`, `userId`, `timeRecordId`)
-- On-behalf: time-tracking tools accept an optional `userId` to act for an employee (requires `TrackOnBehalf` permission)
+- On-behalf: 7 tools accept an optional `userId` to act for an employee (requires `TrackOnBehalf` permission) — listed under On-Behalf Operations below; report tools (`get_own_time_reports`, `get_tracked_time`) do not
 - Business rules enforced server-side: lock dates, approval status, project assignments
 
 ## Approval Tools
@@ -54,13 +54,16 @@ To **reverse** an approval, use `decline_time_entries` with `from`, `to` (and op
 
 ## On-Behalf Operations
 
-Act for an employee using `userId` on these tools (requires `TrackOnBehalf` permission):
-- `get_time_records` + `userId` — view their entries
+Act for an employee using `userId` on these 7 tools (requires `TrackOnBehalf` permission):
+- `list_projects` + `userId` — see their assigned projects
+- `validate_day` + `userId` — check if a date is editable for them
 - `log_time` + `userId` — log time for them
+- `get_time_records` + `userId` — view their entries
 - `update_time_record` + `userId` — edit their entry
 - `delete_time_record` + `userId` — remove their entry
 - `submit_for_approval` + `userId` — submit their entries
-- `list_projects` + `userId` — see their assigned projects
+
+`get_own_time_reports` and `get_tracked_time` do not take `userId` — use `get_all_time_reports` (with `userIds` filter) for another user's metrics.
 
 ## Reports & Exports
 

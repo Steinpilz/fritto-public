@@ -6,8 +6,11 @@ tool-usage guidance for time tracking, approvals, user management, and reporting
 ## What's Included
 
 - **MCP server connection** — pre-configured HTTP transport with OAuth 2.0
-- **TimeTracker tools skill** — persona-based guide (time submitter, reviewer/approver,
-  company admin) covering 29 MCP tools, with workflows and error handling
+- **Three role-based skills** — each documents only the tools its role needs, to keep
+  context focused:
+  - `time-submitter` — track your own time (log, edit, submit, own reports)
+  - `time-reviewer` — review/approve team time, act on behalf, team reports & exports
+  - `admin` — everything, plus user management, cost rates, project assignments, groups
 
 ## Prerequisites
 
@@ -23,10 +26,12 @@ tool-usage guidance for time tracking, approvals, user management, and reporting
 /plugin install fritto-timetracker@fritto
 ```
 
-Invoke the guidance skill manually any time:
+Invoke a role skill manually any time:
 
 ```
-/fritto-timetracker:timetracker-tools
+/fritto-timetracker:time-submitter
+/fritto-timetracker:time-reviewer
+/fritto-timetracker:admin
 ```
 
 ### GitHub Copilot CLI
@@ -52,8 +57,9 @@ Cursor reads MCP servers from `~/.cursor/mcp.json`. Add:
 }
 ```
 
-For tool guidance in Cursor, copy `skills/timetracker-tools/SKILL.md` into your
-project's `.cursor/skills/timetracker-tools/SKILL.md` (or your personal skills directory).
+For tool guidance in Cursor, copy the relevant role skill (e.g.
+`skills/time-submitter/SKILL.md`) into your project's `.cursor/skills/<name>/SKILL.md`
+(or your personal skills directory).
 
 ## Configuration
 
@@ -91,8 +97,8 @@ Set `TIMETRACKER_API_KEY`. Format: `{UUID}.{Secret}` (from the Fritto admin pane
 
 ## Tools
 
-The skill covers 29 MCP tools organized by role:
+29 MCP tools total, scoped across the three skills:
 
-- **Time Submitter** — log time, view/edit entries, submit for approval
-- **Reviewer/Approver** — search pending, approve/decline, reports, exports
-- **Company Admin** — user CRUD, cost rates, project assignments, employee groups
+- **`time-submitter`** — log time, view/edit own entries, submit for approval, own reports
+- **`time-reviewer`** — submitter tools (+ on-behalf), search pending, approve/decline, team reports & exports
+- **`admin`** — all of the above, plus user CRUD, cost rates, project assignments, employee groups

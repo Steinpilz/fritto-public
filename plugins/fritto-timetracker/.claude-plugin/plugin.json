@@ -1,7 +1,7 @@
 {
   "name": "fritto-timetracker",
   "version": "1.0.0",
-  "description": "TimeTracker MCP tools for time tracking, approvals, user management, and reporting",
+  "description": "Fritto TimeTracker MCP tools for time tracking, approvals, user management, and reporting",
   "author": {
     "name": "Steinpilz GmbH"
   },
